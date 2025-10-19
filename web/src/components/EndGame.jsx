@@ -23,7 +23,7 @@ export default function EndGame() {
                 {visitados.map((pais, index) => (
                     <button
                         key={pais?.cca3 ?? index}
-                        style={{ width: 70, height: 60, marginBottom: 10, marginRight: 10 }}
+                        style={{ width: 70, height: 60, marginBottom: 10, marginRight: 10, pointerEvents: "none" }}
                         title={pais?.cca3}
                     >
                         <img
@@ -31,9 +31,7 @@ export default function EndGame() {
                             style={{ width: 50, height: 40, objectFit: "cover" }}
                         />
                     </button>
-
                 ))}
-
             </div>
             <button onClick={() => handleClick()}>Continuar</button>
         </div>

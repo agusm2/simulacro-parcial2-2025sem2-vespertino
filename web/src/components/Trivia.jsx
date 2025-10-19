@@ -91,7 +91,6 @@ export default function Trivia() {
                 src={new URL(paisActual?.flag?.svg, window.location)}
                 alt={`Imagen de ${paisActual?.name?.common}`}
                 style={{ width: 130, height: 80 }}
-
             ></img>
             <p>¿Cuál de los siguientes países es fronterizo?</p>
             <div>
@@ -107,11 +106,8 @@ export default function Trivia() {
                                 style={{ width: 50, height: 40, objectFit: "cover" }}
                             />
                         </button>
-
                     ))}
-
                 </div>
-
                 <div>
                     <button
                         style={{ marginBottom: 0, marginTop: 10 }}

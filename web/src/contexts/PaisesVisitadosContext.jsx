@@ -15,6 +15,5 @@ export const PaisesVisitadosProvider = ({ children }) => {
         <PaisesVisitadosContext.Provider value={{ visitados, agregarVisitado, resetVisitados }}>
             {children}
         </PaisesVisitadosContext.Provider>
-
     );
 };
