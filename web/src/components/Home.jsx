@@ -5,6 +5,10 @@ import { PaisesVisitadosContext } from '../contexts/PaisesVisitadosContext';
 
 export default function Home() {
   const [initialCountry, setInitialCountry] = useState(null);
+
+  //Permite navegar entre rutas sin la necesidad de Link
+  //<Link>: cuando el usuario debe hacer clic en algo visible
+  //useNavigate: cuando yo tengo que decidir por lógica cuando navegar
   const navigate = useNavigate();
 
   const { setDifficulty } = useContext(DifficultyContext);
@@ -12,6 +16,7 @@ export default function Home() {
 
   async function obtenerPaisAleatorio() {
     try {
+      //new URL(...) crea una URL a partir de una cadena
       const response = await fetch(new URL("/api/countries", window.location));
       if (!response.ok) {
         throw new Error("No se pudo obtener los países");
@@ -29,6 +34,7 @@ export default function Home() {
     }
   }
 
+  //Ejecuta la función cuando el componente se monta en el DOM y cada vez que cambian las dependencias []
   useEffect(() => {
     obtenerPaisAleatorio();
   }, []);
@@ -50,4 +56,3 @@ export default function Home() {
     </div>
   );
 }
-

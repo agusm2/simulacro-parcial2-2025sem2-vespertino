@@ -6,9 +6,13 @@ import { DifficultyContext } from "../contexts/DifficultyContext";
 export default function EndGame() {
     const navigate = useNavigate();
 
+    //Maneja los países visitados y los reinicia en caso de iniciar una nueva partida
     const { visitados, resetVisitados } = useContext(PaisesVisitadosContext);
+
+    //Reinicio la dificultad para actualizar cantidad de errores
     const { setDifficulty } = useContext(DifficultyContext);
 
+    //Manejo para cuando el usuario quiere iniciar una nueva partida
     function handleClick() {
         setDifficulty("");
         resetVisitados([]);
@@ -20,6 +24,7 @@ export default function EndGame() {
             <h2>Fin del juego</h2>
             <p>Usted visitó los siguientes países:</p>
             <div>
+                {/* Mapeo de los países visitados */}
                 {visitados.map((pais, index) => (
                     <button
                         key={pais?.cca3 ?? index}
