@@ -1,1 +1,26 @@
 /* CSS styles go here. */
+div {
+    text-align: center;
+}
+
+.div-btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.div-opciones {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 10px;
+    justify-content: center;
+}

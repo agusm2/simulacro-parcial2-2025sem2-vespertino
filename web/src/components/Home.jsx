@@ -1,30 +1,52 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DifficultyContext } from '../contexts/DifficultyContext';
+import { PaisesVisitadosContext } from '../contexts/PaisesVisitadosContext';
 
 export default function Home() {
-  const [country, setCountry] = useState(null);
+  const [initialCountry, setInitialCountry] = useState(null);
+  const navigate = useNavigate();
+
+  const { setDifficulty } = useContext(DifficultyContext);
+  const { agregarVisitado } = useContext(PaisesVisitadosContext)
+
+  async function obtenerPaisAleatorio() {
+    try {
+      const response = await fetch(new URL("/api/countries", window.location));
+      if (!response.ok) {
+        throw new Error("No se pudo obtener los países");
+      }
+      const codigos = await response.json();
+      const indice = Math.floor(Math.random() * codigos.length);
+      const codigoInicial = codigos[indice];
+
+      const data = await fetch(new URL(`/api/countries/${codigoInicial}`, window.location));
+      const paisInicial = await data.json();
+      agregarVisitado(paisInicial);
+      setInitialCountry(paisInicial);
+    } catch (e) {
+      console.error("Error: ", e.message);
+    }
+  }
 
   useEffect(() => {
-    fetch(new URL('/api/countries/URY', window.location)).then((req) => {
-      if (req.ok) {
-        req.json().then(setCountry);
-      }
-    });
+    obtenerPaisAleatorio();
   }, []);
+
+  function handleClick(difficulty) {
+    setDifficulty(difficulty);
+    navigate(`/${initialCountry.cca3}`);
+  }
 
   return (
     <div>
-      <h1>{country?.name?.common ?? 'Cargando...'}</h1>
-      {country && (
-        <div>
-          {country.flag?.svg ? (
-            <img
-              src={new URL(country.flag.svg, window.location)}
-              alt={country.flag.alt ?? `Flag of ${country.name?.common}`}
-              style={{ width: 160, height: 110 }}
-            />
-          ) : null}
-        </div>
-      )}
+      <h2>Flag Trivia</h2>
+      <p style={{ marginTop: 20 }}>Elija la dificultad del juego</p>
+      <div className='div-btns'>
+        <button onClick={() => handleClick("facil")}>Fácil</button>
+        <button onClick={() => handleClick("medio")}>Medio</button>
+        <button onClick={() => handleClick("dificil")}>Difícil</button>
+      </div>
     </div>
   );
 }
